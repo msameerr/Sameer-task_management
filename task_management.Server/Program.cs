@@ -1,5 +1,7 @@
+using AutoMapper;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using task_management.Server;
 using task_management.Server.Contracts;
 using task_management.Server.Data;
 using task_management.Server.Models;
@@ -26,8 +28,14 @@ builder.Services.AddControllers().AddJsonOptions(options =>
     options.JsonSerializerOptions.PropertyNamingPolicy = null;
 });
 
+// Add Automapper Configurations
+IMapper mapper = MapperConfig.RegisterMap().CreateMapper();
+builder.Services.AddSingleton(mapper);
+builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
+
 // Add Services
 builder.Services.AddScoped<IAuthRepository, AuthRepository>();
+builder.Services.AddScoped<ITaskRepository, TaskRepository>();
 
 // Allow frontend
 builder.Services.AddCors(options =>

@@ -14,6 +14,9 @@ namespace task_management.Server.Data
         }
 
         public DbSet<ApplicationUser> ApplicationUsers { get; set; }
+        public DbSet<Models.TaskStatus> TaskStatuses { get; set; }
+        public DbSet<TaskCategory> TaskCategories { get; set; }
+        public DbSet<Models.Task> Tasks { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
