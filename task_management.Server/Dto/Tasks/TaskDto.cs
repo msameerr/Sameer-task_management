@@ -7,6 +7,7 @@ namespace task_management.Server.Dto.Tasks
     public class TaskDto
     {
 
+        public int TaskId { get; set; }
         public string Title { get; set; }
         public string Description { get; set; }
         public int Priority { get; set; }

@@ -31,7 +31,7 @@ namespace task_management.Server.Repository
                     Description = taskDto.Description,
                     Priority = taskDto.Priority,
                     CreatedBy = taskDto.CreatedBy,
-                    TaskCompletionDate = DateTime.Now,
+                    TaskCompletionDate = taskDto.TaskCompletionDate,
                     StatusId = taskDto.StatusId,
                     CategoryId = taskDto.CategoryId,
                     IsActive = taskDto.IsActive,
@@ -60,11 +60,12 @@ namespace task_management.Server.Repository
 
                 Models.Task task = new()
                 {
+                    TaskId = taskDto.TaskId,
                     Title = taskDto.Title,
                     Description = taskDto.Description,
                     Priority = taskDto.Priority,
                     CreatedBy = taskDto.CreatedBy,
-                    TaskCompletionDate = DateTime.Now,
+                    TaskCompletionDate = taskDto.TaskCompletionDate,
                     StatusId = taskDto.StatusId,
                     CategoryId = taskDto.CategoryId,
                     IsActive = taskDto.IsActive,
@@ -95,14 +96,14 @@ namespace task_management.Server.Repository
 
         public async Task<TaskDto> GetTaskById(int taskId)
         {
-            var task = _db.Tasks.FirstOrDefault(q => q.TaskId == taskId);
+            var task = _db.Tasks.FirstOrDefault(q => q.TaskId == taskId && q.IsActive == true);
             return _mapper.Map<TaskDto>(task);
         }
 
         public async Task<IEnumerable<TaskDto>> GetTasksPerUser()
         {
 
-            var tasks = await _db.Tasks.Where(q => q.CreatedBy == "Sameer").ToListAsync();
+            var tasks = await _db.Tasks.Where(q => q.CreatedBy == "Sameer" && q.IsActive == true).ToListAsync();
             return _mapper.Map<List<TaskDto>>(tasks);
 
         }

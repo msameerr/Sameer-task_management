@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using task_management.Server.Contracts;
 using task_management.Server.Dto;
 using task_management.Server.Dto.Tasks;
@@ -73,11 +74,11 @@ namespace task_management.Server.Controllers
 
         }
 
-        [HttpGet("GetTaskById")]
-        public async Task<IActionResult> GetTaskById(int id)
+        [HttpGet("GetTaskById/{TaskId}")]
+        public async Task<IActionResult> GetTaskById(int TaskId)
         {
 
-            var result = await _taskRepo.GetTaskById(id);
+            var result = await _taskRepo.GetTaskById(TaskId);
 
             if (result == null)
             {
@@ -111,11 +112,11 @@ namespace task_management.Server.Controllers
 
         }
 
-        [HttpPut("Delete")]
-        public async Task<IActionResult> DeleteTask(int id)
+        [HttpPut("Delete/{TaskId}")]
+        public async Task<IActionResult> DeleteTask(int TaskId)
         {
 
-            var result = await _taskRepo.DeleteTask(id);
+            var result = await _taskRepo.DeleteTask(TaskId);
 
             if (!result)
             {

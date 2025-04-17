@@ -17,6 +17,7 @@ import { useNavigate } from "react-router-dom"
 
 import { authService } from "@/services/AuthService"
 
+
 // Sign In Form Schema
 const signInFormSchema = z.object({
     email: z.string().email({ message: "Please enter a valid email address." }),
@@ -41,7 +42,7 @@ export default function SignInForm() {
     })
 
     const onSubmit = async (data: SignInFormValues) => {
-        console.log("Sign Up Data:", data)
+        console.log("Sign In Data:", data)
         try {
             setIsSubmitting(true)
             const response = await authService.signIn({
@@ -50,13 +51,14 @@ export default function SignInForm() {
             })
 
             if (response.IsSuccess) {
+
                 navigate("/userHome") // Redirect to SignIn page
             } else {
                 alert(response.Message)
             }
         } catch (error) {
             console.error("Signup failed:", error)
-            alert("Failed to register user")
+            alert("Failed to login user")
         } finally {
             setIsSubmitting(false)
         }

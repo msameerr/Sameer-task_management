@@ -11,13 +11,16 @@ namespace task_management.Server.Repository
     {
 
         private readonly AppDbContext _db;
+        private readonly IJwtTokenGenenrator _jwtTokenGenerator;
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly RoleManager<IdentityRole> _roleManager;
 
-        public AuthRepository(AppDbContext db,
+
+        public AuthRepository(AppDbContext db, IJwtTokenGenenrator jwtTokenGenerator,
             UserManager<ApplicationUser> userManager, RoleManager<IdentityRole> roleManager)
         {
             _db = db;
+            _jwtTokenGenerator = jwtTokenGenerator;
             _userManager = userManager;
             _roleManager = roleManager;
         }
@@ -40,6 +43,8 @@ namespace task_management.Server.Repository
 
             var roles = await _userManager.GetRolesAsync(user);
 
+            var token = _jwtTokenGenerator.GenerateToken(user, roles);
+
             UserDto userDto = new()
             {
                 ID = user.Id,
@@ -52,7 +57,7 @@ namespace task_management.Server.Repository
             return new LoginResponseDto()
             {
                 User = userDto,
-                Token = " "
+                Token = token
             };
         }
 

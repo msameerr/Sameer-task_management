@@ -34,6 +34,7 @@ builder.Services.AddSingleton(mapper);
 builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
 // Add Services
+builder.Services.AddScoped<IJwtTokenGenenrator, JwtTokenGenerator>();
 builder.Services.AddScoped<IAuthRepository, AuthRepository>();
 builder.Services.AddScoped<ITaskRepository, TaskRepository>();
 
