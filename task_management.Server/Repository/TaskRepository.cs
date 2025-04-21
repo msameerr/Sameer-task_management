@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using System.Security.Claims;
 using task_management.Server.Contracts;
 using task_management.Server.Data;
 using task_management.Server.Dto.Tasks;
@@ -100,10 +101,10 @@ namespace task_management.Server.Repository
             return _mapper.Map<TaskDto>(task);
         }
 
-        public async Task<IEnumerable<TaskDto>> GetTasksPerUser()
+        public async Task<IEnumerable<TaskDto>> GetTasksPerUser(string UserId)
         {
-
-            var tasks = await _db.Tasks.Where(q => q.CreatedBy == "Sameer" && q.IsActive == true).ToListAsync();
+            string id = UserId;
+            var tasks = await _db.Tasks.Where(q => q.CreatedBy == id && q.IsActive == true).ToListAsync();
             return _mapper.Map<List<TaskDto>>(tasks);
 
         }

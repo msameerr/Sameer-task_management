@@ -38,7 +38,16 @@ const TaskDetailPage = () => {
             try {
                 setLoading(true)
 
-                const response = await fetch(`https://localhost:7266/api/task/GetTaskById/${id}`)
+                const token = JSON.parse(localStorage.getItem("user") || "{}")?.Token;
+
+                const response = await fetch(`https://localhost:7266/api/task/GetTaskById/${id}`, {
+                    method: "GET",
+                    headers: {
+                        "Content-Type": "application/json",
+                        Authorization: `Bearer ${token}`,
+                    },
+                });
+
                 if (!response.ok) throw new Error("Failed to fetch task")
 
                 const data: ApiResponse<TaskDto> = await response.json()

@@ -44,7 +44,16 @@ const TaskDeletePage = () => {
             try {
                 setLoading(true)
 
-                const response = await fetch(`https://localhost:7266/api/task/GetTaskById/${id}`)
+                const token = JSON.parse(localStorage.getItem("user") || "{}")?.Token;
+
+                const response = await fetch(`https://localhost:7266/api/task/GetTaskById/${id}`, {
+                    method: "GET",
+                    headers: {
+                        "Content-Type": "application/json",
+                        Authorization: `Bearer ${token}`,
+                    },
+                });
+
                 if (!response.ok) throw new Error("Failed to fetch task")
 
                 const data: ApiResponse<Task> = await response.json()
@@ -70,9 +79,16 @@ const TaskDeletePage = () => {
         try {
             setIsDeleting(true)
 
+            const token = JSON.parse(localStorage.getItem("user") || "{}")?.Token;
+
             const response = await fetch(`https://localhost:7266/api/task/Delete/${id}`, {
                 method: "PUT",
-            })
+                headers: {
+                    "Content-Type": "application/json",
+                    Authorization: `Bearer ${token}`,
+                },
+            });
+
 
             const data: ApiResponse = await response.json()
 

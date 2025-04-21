@@ -1,16 +1,3 @@
-//// src/services/TaskService.ts
-
-//export enum TaskStatus {
-//    Pending = 0,
-//    InProgress = 1,
-//    Completed = 2,
-//    // Add other statuses if needed
-//}
-
-//export interface TaskCategory {
-//    id: number;
-//    name: string;
-//}
 
 
 export interface TaskDto {
@@ -47,12 +34,19 @@ interface ApiResponse<T = unknown> {
 export const taskService = {
 
     getUserTask: async (): Promise<TaskDto[]> => {
+
+        const token = JSON.parse(localStorage.getItem("user") || "{}")?.Token;
+        const user = JSON.parse(localStorage.getItem("user") || "{}");
+
         try {
-            const response = await fetch("https://localhost:7266/api/task/GetUserTasks", {
+            
+            const userId = user.User.ID;
+            console.log("UserId : ", userId);
+            const response = await fetch(`https://localhost:7266/api/task/GetUserTasks/${userId}`, {
                 method: "GET",
                 headers: {
                     "Content-Type": "application/json",
-                    // Add Authorization header here if required
+                    Authorization: `Bearer ${token}`,
                 },
             });
 
@@ -75,12 +69,13 @@ export const taskService = {
 
 
     createTask: async (taskData: CreateTaskDto): Promise<ApiResponse> => {
-
+        const token = JSON.parse(localStorage.getItem("user") || "{}")?.Token;
         try {
             const response = await fetch("https://localhost:7266/api/task/Create", {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
+                    Authorization: `Bearer ${token}`,
                 },
                 body: JSON.stringify(taskData),
             });
@@ -99,12 +94,13 @@ export const taskService = {
 
 
     updateTask: async (taskData: CreateTaskDto): Promise<ApiResponse> => {
-
+        const token = JSON.parse(localStorage.getItem("user") || "{}")?.Token;
         try {
             const response = await fetch("https://localhost:7266/api/task/Update", {
                 method: "PUT",
                 headers: {
                     "Content-Type": "application/json",
+                    Authorization: `Bearer ${token}`,
                 },
                 body: JSON.stringify(taskData),
             });

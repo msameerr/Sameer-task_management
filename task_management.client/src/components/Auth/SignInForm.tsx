@@ -7,6 +7,7 @@ import { useState } from "react"
 import { useForm } from "react-hook-form"
 import { zodResolver } from "@hookform/resolvers/zod"
 import * as z from "zod"
+
 import { Link } from "react-router-dom"
 
 import { Button } from "@/components/ui/button"
@@ -17,6 +18,7 @@ import { useNavigate } from "react-router-dom"
 
 import { authService } from "@/services/AuthService"
 
+import { useAuth } from "@/context/AuthContext";
 
 // Sign In Form Schema
 const signInFormSchema = z.object({
@@ -41,8 +43,10 @@ export default function SignInForm() {
         },
     })
 
+    const { login } = useAuth();
+
     const onSubmit = async (data: SignInFormValues) => {
-        console.log("Sign In Data:", data)
+        console.log("Sign Up Data:", data)
         try {
             setIsSubmitting(true)
             const response = await authService.signIn({
@@ -52,13 +56,18 @@ export default function SignInForm() {
 
             if (response.IsSuccess) {
 
-                navigate("/userHome") // Redirect to SignIn page
+                localStorage.setItem("user", JSON.stringify(response.Result));
+                console.log(localStorage.getItem("user"));
+                login();
+
+                navigate("/userHome");
+
             } else {
                 alert(response.Message)
             }
         } catch (error) {
             console.error("Signup failed:", error)
-            alert("Failed to login user")
+            alert("Failed to register user")
         } finally {
             setIsSubmitting(false)
         }

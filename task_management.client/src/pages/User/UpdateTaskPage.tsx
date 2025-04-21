@@ -40,8 +40,12 @@ const formatDateForInput = (dateString: string): string => {
 }
 
 const UpdateTaskPage = () => {
+
+    const user = JSON.parse(localStorage.getItem("user") || "{}");
+
   const { id } = useParams<{ id: string }>()
-  const navigate = useNavigate()
+    const navigate = useNavigate()
+
 
     const [formData, setFormData] = useState<TaskFormData>({
       TaskId:0,
@@ -51,7 +55,7 @@ const UpdateTaskPage = () => {
       TaskCompletionDate: "",
       StatusId: 1,
       CategoryId: 1,
-      CreatedBy: "",
+      CreatedBy: user.User.ID,
       IsActive: true,
       CreatedOn:""
   })
@@ -66,7 +70,16 @@ const UpdateTaskPage = () => {
             try {
                 setLoading(true)
 
-                const response = await fetch(`https://localhost:7266/api/task/GetTaskById/${id}`)
+                const token = JSON.parse(localStorage.getItem("user") || "{}")?.Token;
+
+                const response = await fetch(`https://localhost:7266/api/task/GetTaskById/${id}`, {
+                    method: "GET",
+                    headers: {
+                        "Content-Type": "application/json",
+                        Authorization: `Bearer ${token}`,
+                    },
+                });
+
                 if (!response.ok) throw new Error("Failed to fetch task")
 
                 const data: ApiResponse<TaskFormData> = await response.json()
@@ -81,7 +94,7 @@ const UpdateTaskPage = () => {
                         TaskCompletionDate: formatDateForInput(taskData.TaskCompletionDate),
                         StatusId: taskData.StatusId,
                         CategoryId: taskData.CategoryId,
-                        CreatedBy: taskData.CreatedBy,
+                        CreatedBy: user.User.ID,
                         IsActive: taskData.IsActive,
                         CreatedOn: taskData.CreatedOn
                     })

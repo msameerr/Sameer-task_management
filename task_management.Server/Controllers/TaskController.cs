@@ -6,8 +6,10 @@ using task_management.Server.Dto.Tasks;
 
 namespace task_management.Server.Controllers
 {
+   
     [Route("api/task")]
     [ApiController]
+
     public class TaskController : Controller
     {
 
@@ -20,7 +22,7 @@ namespace task_management.Server.Controllers
             _response = new();
         }
 
-
+        [Authorize(Roles = "USER")]
         [HttpPost("Create")]
         public async Task<IActionResult> CreateTask([FromBody] TaskDto taskDto)
         {
@@ -38,6 +40,7 @@ namespace task_management.Server.Controllers
 
         }
 
+        [Authorize(Roles = "USER")]
         [HttpPut("Update")]
         public async Task<IActionResult> UpdateTask([FromBody] TaskDto taskDto)
         {
@@ -55,6 +58,7 @@ namespace task_management.Server.Controllers
 
         }
 
+      
         [HttpGet("GetAll")]
         public async Task<IActionResult> GetAllTasks()
         {
@@ -74,6 +78,8 @@ namespace task_management.Server.Controllers
 
         }
 
+
+        [Authorize(Roles = "USER")]
         [HttpGet("GetTaskById/{TaskId}")]
         public async Task<IActionResult> GetTaskById(int TaskId)
         {
@@ -93,11 +99,13 @@ namespace task_management.Server.Controllers
 
         }
 
-        [HttpGet("GetUserTasks")]
-        public async Task<IActionResult> GetUserTasks()
+
+        //[Authorize(Roles="USER")]
+        [HttpGet("GetUserTasks/{UserId}")]
+        public async Task<IActionResult> GetUserTasks(string UserId)
         {
 
-            var result = await _taskRepo.GetTasksPerUser();
+            var result = await _taskRepo.GetTasksPerUser(UserId);
 
             if (result == null)
             {
@@ -112,6 +120,7 @@ namespace task_management.Server.Controllers
 
         }
 
+        [Authorize(Roles = "USER")]
         [HttpPut("Delete/{TaskId}")]
         public async Task<IActionResult> DeleteTask(int TaskId)
         {

@@ -29,6 +29,8 @@ interface CreateTaskDto {
 const CreateTaskPage = () => {
     const navigate = useNavigate()
 
+    const user = JSON.parse(localStorage.getItem("user") || "{}");
+
     const [formData, setFormData] = useState<CreateTaskDto>({
         Title: "",
         Description: "",
@@ -38,7 +40,7 @@ const CreateTaskPage = () => {
         CategoryId: 1, 
         IsActive: true,
         CreatedOn: new Date().toISOString(),
-        CreatedBy: "Sameer"
+        CreatedBy: user.User.ID,
     })
 
     const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
@@ -61,11 +63,11 @@ const CreateTaskPage = () => {
 
         const taskData = {
             ...formData,
-            // Convert the string date to a proper DateTime format if needed
+            
             TaskCompletionDate: new Date(formData.TaskCompletionDate).toISOString(),
             IsActive: true,
             CreatedOn: new Date().toISOString(),
-            CreatedBy: "Sameer"
+            CreatedBy: user.User.ID,
         }
 
         try {

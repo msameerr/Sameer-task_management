@@ -54,6 +54,8 @@ const getStatusColor = (status: number): string => {
 
 const TaskListPage: React.FC = () => {
 
+    const user = JSON.parse(localStorage.getItem("user") || "{}");
+
     const [tasks, setTasks] = useState<TaskDto[]>([]);
     const [loading, setLoading] = useState<boolean>(true);
     const [error, setError] = useState<string | null>(null);
@@ -61,6 +63,8 @@ const TaskListPage: React.FC = () => {
     useEffect(() => {
         const fetchTasks = async () => {
             try {
+                const id = user.User.ID;
+                console.log("user id : ", id);
                 const data = await taskService.getUserTask();
                 setTasks(data);
             } catch (err) {
@@ -73,6 +77,7 @@ const TaskListPage: React.FC = () => {
 
         fetchTasks();
     }, []);
+
 
     if (loading) return <div>Loading tasks...</div>;
     if (error) return <div>{error}</div>;

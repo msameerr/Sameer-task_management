@@ -1,4 +1,5 @@
-﻿using task_management.Server.Dto.Tasks;
+﻿using System.Security.Claims;
+using task_management.Server.Dto.Tasks;
 
 namespace task_management.Server.Contracts
 {
@@ -8,7 +9,7 @@ namespace task_management.Server.Contracts
         Task<IEnumerable<TaskDto>> GetTasks();
         Task<TaskDto> GetTaskById(int taskId);
         Task<string> CreateTask(TaskDto taskDto);
-        Task<IEnumerable<TaskDto>> GetTasksPerUser();
+        Task<IEnumerable<TaskDto>> GetTasksPerUser(string UserId);
         Task<string> UpdateTask(TaskDto taskDto);
         Task<bool> DeleteTask(int taskId);
 
