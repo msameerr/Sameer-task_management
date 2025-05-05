@@ -42,21 +42,23 @@ namespace task_management.Server.Repository
             }
 
             var roles = await _userManager.GetRolesAsync(user);
+            var role = roles.FirstOrDefault();
 
             var token = _jwtTokenGenerator.GenerateToken(user, roles);
 
-            UserDto userDto = new()
+            LoginUserDto LoginUser = new()
             {
                 ID = user.Id,
                 Name = user.Name,
                 Email = user.Email,
-                CreatedOn = user.CreatedOn
+                CreatedOn = user.CreatedOn,
+                Role = role
             };
 
 
             return new LoginResponseDto()
             {
-                User = userDto,
+                User = LoginUser,
                 Token = token
             };
         }
@@ -81,7 +83,6 @@ namespace task_management.Server.Repository
                 if (result.Succeeded)
                 {
                     var userToReturn = _db.ApplicationUsers.First(q => q.UserName == registrationRequestDto.Email);
-
                     UserDto userDto = new()
                     {
                         ID = userToReturn.Id,

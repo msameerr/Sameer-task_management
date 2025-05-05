@@ -33,6 +33,37 @@ interface ApiResponse<T = unknown> {
 
 export const taskService = {
 
+    getAllTask: async (): Promise<TaskDto[]> => {
+
+        const token = JSON.parse(localStorage.getItem("user") || "{}")?.Token;
+
+        try {
+            const response = await fetch("https://localhost:7266/api/task/GetAll", {
+                method: "GET",
+                headers: {
+                    "Content-Type": "application/json",
+                    Authorization: `Bearer ${token}`,
+                },
+            });
+
+            if (!response.ok) {
+                throw new Error(`HTTP error! status: ${response.status}`);
+            }
+
+            const apiResponse: ApiResponse<TaskDto[]> = await response.json();
+
+            if (!apiResponse.IsSuccess) {
+                throw new Error(apiResponse.Message || "Failed to fetch all user tasks");
+            }
+
+            return apiResponse.Result;
+        } catch (error) {
+            console.error("Error fetching all user tasks:", error);
+            throw error;
+        }
+    },
+
+
     getUserTask: async (): Promise<TaskDto[]> => {
 
         const token = JSON.parse(localStorage.getItem("user") || "{}")?.Token;
