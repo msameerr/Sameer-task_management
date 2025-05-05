@@ -19,8 +19,7 @@ Make sure you have the following installed on your machine:
 ## Backend Setup
 ### 1. Clone the repository:
 ```bash
-git clone [repo name]
-cd folder
+git clone [[repo name]](https://github.com/msameerr/Sameer-task_management.git)
 ```
 
 ### 2. Configure the database:
@@ -28,10 +27,9 @@ cd folder
 - Example `appsettings.json`:
   ```json
   {
-    "ConnectionStrings": {
-      "DefaultConnection": "Server=your_server_name;Database=your_database_name;User Id=your_username;Password=your_password;"
-    },
-    ...
+     "ConnectionStrings": {
+       "DefaultConnection": "Server=localhost\\SQLEXPRESS;Database=Task_Management_System;Trusted_Connection=True;TrustServerCertificate=True;MultipleActiveResultSets=true"
+     }
   }
   ```
 
@@ -50,7 +48,7 @@ dotnet restore
 ```bash
 dotnet run
 ```
-The backend API will be available at `http://localhost:5068`
+The backend API will be available at `[http://localhost:5068](https://localhost:7266)`
 
 
 ## Frontend Setup
@@ -69,7 +67,7 @@ npm install
 ```bash
 npm start
 ```
-The frontend will be available at ` http://localhost:5173/`.
+The frontend will be available at ` [http://localhost:5173](https://localhost:5173/)`.
 
 
 # Tech Stack:
