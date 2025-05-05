@@ -60,7 +60,15 @@ export default function SignInForm() {
                 console.log(localStorage.getItem("user"));
                 login();
 
-                navigate("/userHome");
+                const user = JSON.parse(localStorage.getItem("user") || "{}");
+                const role = user.User.Role;
+
+                if (role == "USER") {
+                    navigate("/userHome");
+                }
+                else {
+                    navigate("/dashboard");
+                }
 
             } else {
                 alert(response.Message)

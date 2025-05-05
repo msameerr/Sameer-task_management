@@ -58,7 +58,8 @@ namespace task_management.Server.Controllers
 
         }
 
-      
+
+        [Authorize(Roles = "ADMIN")]
         [HttpGet("GetAll")]
         public async Task<IActionResult> GetAllTasks()
         {
@@ -100,7 +101,7 @@ namespace task_management.Server.Controllers
         }
 
 
-        //[Authorize(Roles="USER")]
+        [Authorize(Roles="USER")]
         [HttpGet("GetUserTasks/{UserId}")]
         public async Task<IActionResult> GetUserTasks(string UserId)
         {
