@@ -19,7 +19,7 @@ Make sure you have the following installed on your machine:
 ## Backend Setup
 ### 1. Clone the repository:
 ```bash
-git clone [[repo name]](https://github.com/msameerr/Sameer-task_management.git)
+git clone https://github.com/msameerr/Sameer-task_management.git
 ```
 
 ### 2. Configure the database:
@@ -48,7 +48,7 @@ dotnet restore
 ```bash
 dotnet run
 ```
-The backend API will be available at `[http://localhost:5068](https://localhost:7266)`
+The backend API will be available at `https://localhost:7266`
 
 
 ## Frontend Setup
@@ -67,7 +67,7 @@ npm install
 ```bash
 npm start
 ```
-The frontend will be available at ` [http://localhost:5173](https://localhost:5173/)`.
+The frontend will be available at ` https://localhost:5173/`.
 
 
 # Tech Stack:
@@ -80,6 +80,27 @@ Following Tech Stack is being implemented:
 - xUnit for unit testing (to be implemented)
 - SonarQube for analyzing code quality (to be implemented)
 
-## Additional Information
-TBD
+------------------------------------------------------------------------------------------------------------------------------------------------
+
+# POV : ADMIN 
+## Admin's Dashboard
+![dashboard](https://github.com/user-attachments/assets/91a3659b-60ed-446b-b8de-5bf4f45f46b0)
+## Assign To User Page
+![assign](https://github.com/user-attachments/assets/229a874b-4b8a-409b-9657-c812382c7853)
+
+# POV : NORMAL USER
+## Register Page
+![register](https://github.com/user-attachments/assets/8575a8e1-71dc-4b8d-a807-1e620811b552)
+## Login Page
+![login](https://github.com/user-attachments/assets/7e972fec-bfd0-4e41-a843-192571b1c7fd)
+## User Home Page
+![list](https://github.com/user-attachments/assets/90922633-d13b-429e-ad27-f8168a31bace)
+## Task Creation Page 
+![create](https://github.com/user-attachments/assets/374a71d5-a029-48c4-a0af-6048fbcfcdc9)
+## Task Detail Page
+![detail](https://github.com/user-attachments/assets/8c3069bb-4bba-49b9-b817-8de94dc3b43b)
+## Task Delete Page
+![delete](https://github.com/user-attachments/assets/15520951-c429-4acd-a673-5b47b3dd9c8c)
+
+
 
